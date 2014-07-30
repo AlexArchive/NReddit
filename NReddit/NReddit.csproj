@@ -153,6 +153,7 @@
     <Content Include="Content\style-sheet.css.map">
       <DependentUpon>style-sheet.css</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -53,6 +53,7 @@ namespace NReddit.Controllers
             return View(model);
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult SignOut()
         {
             authenticator.SignOut();

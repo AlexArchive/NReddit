@@ -1,0 +1,21 @@
+﻿<header>
+    <nav>
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "signOutForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <ul>
+                    <li><a href="javascript:document.getElementById('signOutForm').submit()">Sign Out</a></li>
+                </ul>
+            }
+        }
+        else
+        {
+            <ul>
+                <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                <li>@Html.ActionLink("Register", "Register", "Account")</li>
+            </ul>
+        }            
+    </nav>
+</header>
