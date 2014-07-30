@@ -8,7 +8,8 @@
 {
     <div class="post">
         <div class="upvote">
-            <a class="upvote-link"></a>
+            @Html.ActionLink(" ", "Vote", "Home", new { id = post.Id }, new{ @class="upvote-link" })
+
             <span class="vote-count">@post.Votes</span>
         </div>
         <div class="link">
@@ -16,4 +17,29 @@
             <span class="post-tagline">@post.Tagline</span>
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script>
+        $(".upvote-link").click(function () {
+
+            event.preventDefault();
+            var upvoteButton = $(this);
+            var url = $(this).attr("href");
+            upvoteButton.addClass("voted");
+
+            var voteCountLabel = upvoteButton.next(".vote-count");
+            var voteCount = parseInt(voteCountLabel.text(), 10) + 1;
+            voteCountLabel.text(voteCount);
+
+            $.get(url)
+            .fail(function () {
+                voteCount = parseInt(voteCountLabel.text(), 10) - 1;
+                voteCountLabel.text(voteCount);
+                upvoteButton.removeClass("voted");
+                alert("You'll need to login or register to do that");
+            });
+        });
+    </script>
 }

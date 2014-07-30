@@ -39,6 +39,8 @@ header {
       border-right: 7px solid transparent;
       border-bottom: 12px solid #bbb;
       border-left: 7px solid transparent; }
+    .post .upvote .voted {
+      border-bottom: 12px solid #62AEB9; }
     .post .upvote .upvote-link:hover {
       border-bottom: 12px solid #62AEB9; }
     .post .upvote .vote-count {
