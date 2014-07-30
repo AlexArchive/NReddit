@@ -120,6 +120,9 @@
     <Content Include="App_Data\Bread_log.ldf">
       <DependentUpon>Bread.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\style-sheet.css">
+      <DependentUpon>style-sheet.scss</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -129,6 +132,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\Model\Post.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -145,6 +149,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Content\style-sheet.scss" />
+    <Content Include="Content\style-sheet.css.map">
+      <DependentUpon>style-sheet.css</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

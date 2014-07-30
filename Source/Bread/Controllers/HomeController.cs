@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using Bread.Data;
 
 namespace Bread.Controllers
 {
@@ -6,7 +8,11 @@ namespace Bread.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            using (var database = new ApplicationDbContext())
+            {
+                var model = database.FeedItems.ToList();
+                return View(model);
+            }
         }
     }
 }

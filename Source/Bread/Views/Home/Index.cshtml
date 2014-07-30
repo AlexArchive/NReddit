@@ -1,13 +1,19 @@
-﻿
+﻿@model IEnumerable<Bread.Data.Model.Post>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>Welcome to Index.</p>
-
-@if (Request.IsAuthenticated)
+@foreach (var post in Model)
 {
-    <p>Hello, @User.Identity.Name</p>
+    <div class="post">
+        <div class="upvote">
+            <a class="upvote-link"></a>
+            <span class="vote-count">@post.Votes</span>
+        </div>
+        <div class="link">
+            <a class="post-link" href="@post.Link">@post.Title</a>
+            <span class="post-tagline">@post.Tagline</span>
+        </div>
+    </div>
 }
