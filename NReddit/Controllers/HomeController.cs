@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using NReddit.Data;
-using NReddit.Data.Model;
+using NReddit.Models;
 using System.Linq;
 using System.Web.Mvc;
-using NReddit.Models;
 
 namespace NReddit.Controllers
 {
