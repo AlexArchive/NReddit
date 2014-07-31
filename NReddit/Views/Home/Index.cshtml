@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NReddit.Data.Model.Post>
+﻿@model IEnumerable<NReddit.Models.PostViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -30,19 +30,17 @@
 @section Scripts
 {
     <script>
-        var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower()
+        var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
 
         $(".upvote-link").click(function () {
 
-
             if (!authenticated) {
-                alert("Go Login Foo");
+                alert("You must be authenticated before you can vote. Please login.");
                 return;
             }
 
             var voteButton = $(this);
             var postId = voteButton.attr("data-id");
-
             var voteCountLabel = voteButton.next(".vote-count");
             var voted = voteButton.hasClass("voted");
             if (voted) {
@@ -53,19 +51,17 @@
                 voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
             }
 
-            $.get("Home/Vote/" + postId, function (response) {
+            var requestUrl = "Home/Vote/" + postId;
 
-                    if (!response.Success) {
-                        alert(response.Message);
-                        return;
-                    }
-
-
-                })
-                .fail(function (error) {
-                    console.log(error);
-                });
-
+            $.get(requestUrl, function (response) {
+                if (!response.Success) {
+                    alert(response.Message);
+                    return;
+                }
+            })
+            .fail(function (error) {
+             
+            });
         });
     </script>
 }

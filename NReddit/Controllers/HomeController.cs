@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
 using NReddit.Data;
 using NReddit.Data.Model;
 using System.Linq;
 using System.Web.Mvc;
+using NReddit.Models;
 
 namespace NReddit.Controllers
 {
@@ -12,54 +11,55 @@ namespace NReddit.Controllers
     {
         public ActionResult Index()
         {
-            using (var database = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
                 var userId = User.Identity.GetUserId();
 
-                List<Post> viewModel = new List<Post>();
+                var query =
+                    context.Posts
+                           .OrderByDescending(post => post.Score)
+                           .Select(post => new PostViewModel
+                           {
+                               Id = post.Id,
+                               Link = post.Link,
+                               Title = post.Title,
+                               Score = post.Score,
+                               Tagline = post.Tagline,
+                               Voted = post.UsersWhoVoted.Any(user => user.Id == userId)
+                           });
 
-                foreach (var post in database.Posts)
-                {
-                    if (post.UsersWhoVoted.Any(user => user.Id == userId))
-                    {
-                        post.Voted = true;
-                    }
-                    viewModel.Add(post);
-                }
-
-                return View(viewModel);
+                return View(query.ToList());
             }
         }
 
         [Authorize]
-        public JsonResult Vote(int id)
+        public ActionResult Vote(int id)
         {
-            using (var database = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                var model = database.Posts.Find(id);
-                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(database));
-                var user = manager.FindById(User.Identity.GetUserId());
+                var post = context.Posts.Find(id);
 
-                if (model == null)
+                if (post == null)
                 {
-                    // error..
+                    return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
                 }
 
-                bool alreadyVoted = model.UsersWhoVoted.Any(u => u.Id == user.Id);
+                var user = context.Users.Find(User.Identity.GetUserId());
+                var alreadyVoted = post.UsersWhoVoted.Any(u => u.Id == user.Id);
 
                 if (alreadyVoted)
                 {
-                    model.Score -= 1;
-                    model.UsersWhoVoted.Remove(user);
-                    database.SaveChanges();
+                    post.Score -= 1;
+                    post.UsersWhoVoted.Remove(user);
+                    context.SaveChanges();
 
                     return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
 
-                model.Score += 1;
-                model.UsersWhoVoted.Add(user);
+                post.Score += 1;
+                post.UsersWhoVoted.Add(user);
+                context.SaveChanges();
 
-                database.SaveChanges();
                 return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
             }
         }
