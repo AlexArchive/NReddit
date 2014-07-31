@@ -9,7 +9,7 @@ namespace NReddit.Data
         public DbSet<Post> FeedItems { get; set; }
 
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base("NReddit")
         {
         }
     }
