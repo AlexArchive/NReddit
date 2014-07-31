@@ -1,14 +1,25 @@
 ﻿body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Open Sans', sans-serif;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif; }
 
 .centered-container {
   margin: auto;
-  max-width: 960px; }
+  padding: 0 25px;
+  max-width: 985px; }
+
+h2 {
+  font-size: 38px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: #242A30; }
+
+a {
+  color: #0094da;
+  text-decoration: none; }
 
 header {
   overflow: hidden; }
@@ -39,9 +50,9 @@ header {
       border-bottom: 12px solid #bbb;
       border-left: 7px solid transparent; }
     .post .upvote .voted {
-      border-bottom: 12px solid #62AEB9; }
+      border-bottom: 12px solid #428bca; }
     .post .upvote .upvote-link:hover {
-      border-bottom: 12px solid #62AEB9; }
+      border-bottom: 12px solid #428bca; }
     .post .upvote .vote-count {
       font-size: 13px;
       display: block; }
@@ -50,10 +61,40 @@ header {
     .post .link .post-link {
       font-size: 18px;
       text-decoration: none;
-      color: #62AEB9;
+      color: #428bca;
       margin-right: 5px;
       font-weight: 600; }
     .post .link .post-tagline {
       font-size: 17px; }
+
+form input {
+  padding: 10px;
+  font-size: 16px;
+  width: 400px; }
+form input:focus {
+  outline: none; }
+form .text-box {
+  margin-bottom: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1); }
+form .text-box:focus {
+  border: 1px solid #999999; }
+form input[type="submit"] {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor: pointer;
+  border: none;
+  background: #54b44e;
+  color: white; }
+form input[type="submit"]:hover {
+  background: #4CA747; }
+form .field-validation-error {
+  color: red; }
+
+.navigation-button {
+  background: #428bca;
+  text-transform: uppercase;
+  color: white;
+  padding: 5px 15px; }
 
 /*# sourceMappingURL=style-sheet.css.map */

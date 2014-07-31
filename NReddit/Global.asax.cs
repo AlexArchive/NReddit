@@ -24,7 +24,19 @@ namespace NReddit
             context.Posts.Add(new Post { Title = "Facebook", Link = "http://www.facebook.com",Tagline="Best social media website." });
             context.Posts.Add(new Post { Title = "Twitter", Link = "http://www.twitter.com",Tagline="The real best social media website."});
             context.Posts.Add(new Post { Title = "YouTube", Link = "http://www.youtube.com",Tagline="Share videos with your friends." });
-
+            context.Posts.Add(new Post { Title = "Google", Link = "http://www.google.com", Tagline = "Awesome search engine." });
+            context.Posts.Add(new Post { Title = "Facebook", Link = "http://www.facebook.com", Tagline = "Best social media website." });
+            context.Posts.Add(new Post { Title = "Twitter", Link = "http://www.twitter.com", Tagline = "The real best social media website." });
+            context.Posts.Add(new Post { Title = "YouTube", Link = "http://www.youtube.com", Tagline = "Share videos with your friends." }); context.Posts.Add(new Post { Title = "Google", Link = "http://www.google.com", Tagline = "Awesome search engine." });
+            context.Posts.Add(new Post { Title = "Facebook", Link = "http://www.facebook.com", Tagline = "Best social media website." });
+            context.Posts.Add(new Post { Title = "Twitter", Link = "http://www.twitter.com", Tagline = "The real best social media website." });
+            context.Posts.Add(new Post { Title = "YouTube", Link = "http://www.youtube.com", Tagline = "Share videos with your friends." }); context.Posts.Add(new Post { Title = "Google", Link = "http://www.google.com", Tagline = "Awesome search engine." });
+            context.Posts.Add(new Post { Title = "Facebook", Link = "http://www.facebook.com", Tagline = "Best social media website." });
+            context.Posts.Add(new Post { Title = "Twitter", Link = "http://www.twitter.com", Tagline = "The real best social media website." });
+            context.Posts.Add(new Post { Title = "YouTube", Link = "http://www.youtube.com", Tagline = "Share videos with your friends." }); context.Posts.Add(new Post { Title = "Google", Link = "http://www.google.com", Tagline = "Awesome search engine." });
+            context.Posts.Add(new Post { Title = "Facebook", Link = "http://www.facebook.com", Tagline = "Best social media website." });
+            context.Posts.Add(new Post { Title = "Twitter", Link = "http://www.twitter.com", Tagline = "The real best social media website." });
+            context.Posts.Add(new Post { Title = "YouTube", Link = "http://www.youtube.com", Tagline = "Share videos with your friends." });
             context.SaveChanges();
         }
     }

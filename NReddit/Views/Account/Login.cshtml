@@ -4,7 +4,6 @@
 }
 
 <h2>Login</h2>
-
 @Html.ValidationSummary()
 
 @using (Html.BeginForm())
@@ -13,3 +12,5 @@
     @Html.EditorForModel()
     <input type="submit" value="Login" />
 }
+
+@Html.ActionLink("Need an account?", "Register", "Account")

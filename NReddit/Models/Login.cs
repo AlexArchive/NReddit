@@ -4,15 +4,12 @@ namespace NReddit.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Enter your username.")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter your password.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
     }
 }
