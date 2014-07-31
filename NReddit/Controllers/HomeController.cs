@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using NReddit.Data;
+using NReddit.Data.Model;
 using System.Linq;
 using System.Web.Mvc;
-using NReddit.Data;
 
 namespace NReddit.Controllers
 {
@@ -11,7 +13,7 @@ namespace NReddit.Controllers
         {
             using (var database = new ApplicationDbContext())
             {
-                var model = database.FeedItems.ToList();
+                var model = database.Posts.ToList();
                 return View(model);
             }
         }
@@ -21,19 +23,28 @@ namespace NReddit.Controllers
         {
             using (var database = new ApplicationDbContext())
             {
-                var model = database.FeedItems.Find(id);
+                var model = database.Posts.Find(id);
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(database));
+                var user = manager.FindById(User.Identity.GetUserId());
 
                 if (model == null)
                 {
                     // error..
                 }
 
-                model.Votes += 1;
+                bool alreadyVoted = model.UsersWhoVoted.Any(u => u.Id == user.Id);
+
+                if (alreadyVoted)
+                {
+                    return Json(new { Success = false, Message = "You have already voted on this post." }, JsonRequestBehavior.AllowGet);
+                }
+
+                model.Score += 1;
+                model.UsersWhoVoted.Add(user);
+
                 database.SaveChanges();
-                return Json(new { Success = true, NewScore = model.Votes }, JsonRequestBehavior.AllowGet);
+                return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
             }
-
-
         }
     }
 }

@@ -10,7 +10,7 @@
         <div class="upvote">
             @Html.ActionLink(" ", "Vote", "Home", new { id = post.Id }, new{ @class="upvote-link" })
 
-            <span class="vote-count">@post.Votes</span>
+            <span class="vote-count">@post.Score</span>
         </div>
         <div class="link">
             <a class="post-link" href="@post.Link">@post.Title</a>
@@ -27,18 +27,22 @@
             event.preventDefault();
             var upvoteButton = $(this);
             var url = $(this).attr("href");
-            upvoteButton.addClass("voted");
 
-            var voteCountLabel = upvoteButton.next(".vote-count");
-            var voteCount = parseInt(voteCountLabel.text(), 10) + 1;
-            voteCountLabel.text(voteCount);
+            $.get(url, function(data) {
 
-            $.get(url)
-            .fail(function () {
-                voteCount = parseInt(voteCountLabel.text(), 10) - 1;
+                if (!data.Success) {
+                    alert(data.Message);
+                    return;
+                }
+
+                upvoteButton.addClass("voted");
+                var voteCountLabel = upvoteButton.next(".vote-count");
+                var voteCount = parseInt(voteCountLabel.text(), 10) + 1;
                 voteCountLabel.text(voteCount);
-                upvoteButton.removeClass("voted");
-                alert("You'll need to login or register to do that");
+
+             })
+            .fail(function () {
+                alert("Something went wrong. Make sure that you're logged in.");
             });
         });
     </script>

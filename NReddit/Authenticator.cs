@@ -2,17 +2,19 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using NReddit.Data;
+using NReddit.Data.Model;
 
 namespace NReddit
 {
     public class Authenticator
     {
-        private UserManager<IdentityUser> UserManager
+        private UserManager<ApplicationUser> UserManager
         {
             get
             {
-                var store = new UserStore<IdentityUser>();
-                return new UserManager<IdentityUser>(store);
+                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                return new UserManager<ApplicationUser>(store);
             }
         }
 
@@ -23,7 +25,7 @@ namespace NReddit
 
         public IdentityResult Register(string username, string password)
         {
-            var user = new IdentityUser { UserName = username };
+            var user = new ApplicationUser { UserName = username };
             var result = UserManager.Create(user, password);
 
             if (result.Succeeded)
@@ -47,7 +49,7 @@ namespace NReddit
             return false;
         }
 
-        public void Authenticate(IdentityUser user, bool persistent)
+        public void Authenticate(ApplicationUser user, bool persistent)
         {
             var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             var authenticationProperties = new AuthenticationProperties { IsPersistent = persistent };
