@@ -8,8 +8,7 @@
 {
     <div class="post">
         <div class="upvote">
-            @Html.ActionLink(" ", "Vote", "Home", new { id = post.Id }, new{ @class="upvote-link" })
-
+            <a class="upvote-link" data-id="@post.Id"></a>
             <span class="vote-count">@post.Score</span>
         </div>
         <div class="link">
@@ -24,26 +23,34 @@
     <script>
         $(".upvote-link").click(function () {
 
-            event.preventDefault();
-            var upvoteButton = $(this);
-            var url = $(this).attr("href");
+            var voteButton = $(this);
+            var postId = voteButton.attr("data-id");
 
-            $.get(url, function(data) {
+            $.get("Home/Vote/" + postId, function (response) {
 
-                if (!data.Success) {
-                    alert(data.Message);
+                if (!response.Success) {
+                    alert(response.Message);
                     return;
                 }
 
-                upvoteButton.addClass("voted");
-                var voteCountLabel = upvoteButton.next(".vote-count");
-                var voteCount = parseInt(voteCountLabel.text(), 10) + 1;
-                voteCountLabel.text(voteCount);
-
+                var voteCountLabel = voteButton.next(".vote-count");
+                var voted = voteButton.hasClass("voted");
+                if (voted) {
+                    voteButton.removeClass("voted");
+                    voteCountLabel.text(parseInt(voteCountLabel.text(), 10) - 1);
+                } else {
+                    voteButton.addClass("voted");
+                    voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
+                }
              })
-            .fail(function () {
+            .fail(function (error) {
+                console.log(error);
                 alert("Something went wrong. Make sure that you're logged in.");
             });
+
+
+
+
         });
     </script>
 }

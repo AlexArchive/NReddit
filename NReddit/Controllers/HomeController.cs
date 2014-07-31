@@ -36,7 +36,10 @@ namespace NReddit.Controllers
 
                 if (alreadyVoted)
                 {
-                    return Json(new { Success = false, Message = "You have already voted on this post." }, JsonRequestBehavior.AllowGet);
+                    model.Score -= 1;
+                    model.UsersWhoVoted.Remove(user);
+
+                    return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
 
                 model.Score += 1;
