@@ -30,35 +30,41 @@
 @section Scripts
 {
     <script>
+        var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower()
+
         $(".upvote-link").click(function () {
+
+
+            if (!authenticated) {
+                alert("Go Login Foo");
+                return;
+            }
 
             var voteButton = $(this);
             var postId = voteButton.attr("data-id");
 
+            var voteCountLabel = voteButton.next(".vote-count");
+            var voted = voteButton.hasClass("voted");
+            if (voted) {
+                voteButton.removeClass("voted");
+                voteCountLabel.text(parseInt(voteCountLabel.text(), 10) - 1);
+            } else {
+                voteButton.addClass("voted");
+                voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
+            }
+
             $.get("Home/Vote/" + postId, function (response) {
 
-                if (!response.Success) {
-                    alert(response.Message);
-                    return;
-                }
-
-                var voteCountLabel = voteButton.next(".vote-count");
-                var voted = voteButton.hasClass("voted");
-                if (voted) {
-                    voteButton.removeClass("voted");
-                    voteCountLabel.text(parseInt(voteCountLabel.text(), 10) - 1);
-                } else {
-                    voteButton.addClass("voted");
-                    voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
-                }
-             })
-            .fail(function (error) {
-                console.log(error);
-                alert("Something went wrong. Make sure that you're logged in.");
-            });
+                    if (!response.Success) {
+                        alert(response.Message);
+                        return;
+                    }
 
 
-
+                })
+                .fail(function (error) {
+                    console.log(error);
+                });
 
         });
     </script>
