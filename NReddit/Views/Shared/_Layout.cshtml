@@ -10,7 +10,12 @@
         
 
         <div class="centered-container">
-            @Html.Partial("_LoginPartial")
+            <header>
+                <h1>@Html.ActionLink("NReddit", "Index", "Home")</h1>
+                <nav>
+                    @Html.Partial("_LoginPartial")
+                </nav>
+            </header>
             @RenderBody()
         </div>
     

@@ -2,40 +2,50 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif; }
-
-.centered-container {
-  margin: auto;
-  padding: 0 25px;
-  max-width: 985px; }
-
-h2 {
-  font-size: 38px;
-  font-weight: 300;
-  margin-bottom: 20px;
   color: #242A30; }
 
+.centered-container {
+  max-width: 985px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  padding: 0 25px; }
+
 a {
-  color: #0094da;
-  text-decoration: none; }
+  text-decoration: none;
+  color: inherit; }
+
+h1 {
+  font-size: 38px;
+  font-weight: 300;
+  margin-bottom: 20px; }
+
+h2 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 20px; }
 
 header {
-  overflow: hidden; }
+  overflow: hidden;
+  margin: 20px 0; }
+  header h1 {
+    float: left;
+    margin: 0; }
   header nav {
-    float: right;
-    margin-right: 5px; }
+    float: right; }
     header nav li {
-      display: inline-block;
+      display: block;
       margin-left: 5px; }
       header nav li a {
-        color: inherit;
-        text-decoration: none; }
+        background: #428BCA;
+        color: white;
+        padding: 5px 15px; }
 
 .post {
   overflow: hidden;
-  padding: 0.6em;
+  padding: 9.5px;
   border-bottom: 1px solid #F1F1F1; }
   .post .upvote {
     float: left;
@@ -50,9 +60,9 @@ header {
       border-bottom: 12px solid #bbb;
       border-left: 7px solid transparent; }
     .post .upvote .voted {
-      border-bottom: 12px solid #428bca; }
+      border-bottom: 12px solid #428BCA; }
     .post .upvote .upvote-link:hover {
-      border-bottom: 12px solid #428bca; }
+      border-bottom: 12px solid #428BCA; }
     .post .upvote .vote-count {
       font-size: 13px;
       display: block; }
@@ -60,8 +70,7 @@ header {
     padding-top: 11px; }
     .post .link .post-link {
       font-size: 18px;
-      text-decoration: none;
-      color: #428bca;
+      color: #428BCA;
       margin-right: 5px;
       font-weight: 600; }
     .post .link .post-tagline {
@@ -70,11 +79,11 @@ header {
 form input {
   padding: 10px;
   font-size: 16px;
-  width: 400px; }
+  width: 400px;
+  margin-bottom: 11px; }
 form input:focus {
   outline: none; }
 form .text-box {
-  margin-bottom: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1); }
 form .text-box:focus {
   border: 1px solid #999999; }
@@ -90,11 +99,7 @@ form input[type="submit"]:hover {
   background: #4CA747; }
 form .field-validation-error {
   color: red; }
-
-.navigation-button {
-  background: #428bca;
-  text-transform: uppercase;
-  color: white;
-  padding: 5px 15px; }
+form + a {
+  color: #0094da; }
 
 /*# sourceMappingURL=style-sheet.css.map */
