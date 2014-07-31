@@ -8,7 +8,16 @@
 {
     <div class="post">
         <div class="upvote">
-            <a class="upvote-link" data-id="@post.Id"></a>
+            
+            @if (post.Voted)
+            {
+                <a class="upvote-link voted" data-id="@post.Id"></a>
+            }
+            else
+            {
+                <a class="upvote-link" data-id="@post.Id"></a>
+            }
+
             <span class="vote-count">@post.Score</span>
         </div>
         <div class="link">

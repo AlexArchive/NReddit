@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using NReddit.Data;
 using NReddit.Data.Model;
@@ -13,8 +14,20 @@ namespace NReddit.Controllers
         {
             using (var database = new ApplicationDbContext())
             {
-                var model = database.Posts.ToList();
-                return View(model);
+                var userId = User.Identity.GetUserId();
+
+                List<Post> viewModel = new List<Post>();
+
+                foreach (var post in database.Posts)
+                {
+                    if (post.UsersWhoVoted.Any(user => user.Id == userId))
+                    {
+                        post.Voted = true;
+                    }
+                    viewModel.Add(post);
+                }
+
+                return View(viewModel);
             }
         }
 
@@ -38,6 +51,7 @@ namespace NReddit.Controllers
                 {
                     model.Score -= 1;
                     model.UsersWhoVoted.Remove(user);
+                    database.SaveChanges();
 
                     return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
