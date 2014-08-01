@@ -116,4 +116,7 @@ form + a {
     .validation-summary-errors ul li {
       list-style: none; }
 
+.posts {
+  margin-bottom: 20px; }
+
 /*# sourceMappingURL=style-sheet.css.map */

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Threading;
+using Microsoft.AspNet.Identity;
 using NReddit.Database;
 using NReddit.Database.Models;
 using NReddit.Models;
@@ -18,8 +20,11 @@ namespace NReddit.Controllers
         public ActionResult InfiniteScroll(int pageNumber)
         {
             if (Request.IsAjaxRequest())
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(1));
                 return PartialView("_PostsPartial", LoadPosts(pageNumber));
-            
+            }
+
             return HttpNotFound();
         }
 
