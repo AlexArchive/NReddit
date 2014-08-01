@@ -42,6 +42,8 @@ header {
         background: #428BCA;
         color: white;
         padding: 5px 15px; }
+      header nav li a:hover {
+        background: #3580bd; }
 
 .post {
   overflow: hidden;
@@ -96,7 +98,7 @@ form input[type="submit"] {
   background: #54b44e;
   color: white; }
 form input[type="submit"]:hover {
-  background: #4CA747; }
+  background: #4ba345; }
 form .field-validation-error {
   color: red; }
 form + a {
