@@ -10,8 +10,6 @@ namespace NReddit.Controllers
 {
     public class HomeController : Controller
     {
-        private const int PageSize = 16;
-
         public ActionResult Index()
         {
             return View(LoadPosts());
@@ -25,17 +23,19 @@ namespace NReddit.Controllers
             return HttpNotFound();
         }
 
-        private IEnumerable<PostViewModel> LoadPosts(int id = 0)
+        private IEnumerable<PostViewModel> LoadPosts(int pageNumber = 0)
         {
-            var userId = User.Identity.GetUserId();
+            const int PageSize = 16;
 
             using (var context = new ApplicationDbContext())
             {
+                var userId = User.Identity.GetUserId();
+
                 var query =
                     context.Posts
                            .OrderByDescending(post => post.Score)
                            .ThenBy(post => post.Id)
-                           .Skip(PageSize * id)
+                           .Skip(PageSize * pageNumber)
                            .Take(PageSize)
                            .Select(post => new PostViewModel
                            {
@@ -49,18 +49,22 @@ namespace NReddit.Controllers
 
                 return query.ToList();
             }
-        }  
+        }
 
-        [Authorize]
         public ActionResult Vote(int id)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return Json(new { Success = false, Message = "Not authenticated." }, JsonRequestBehavior.AllowGet);
+            }
+
             using (var context = new ApplicationDbContext())
             {
                 var post = context.Posts.Find(id);
 
                 if (post == null)
-                {
-                    return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+                { 
+                    return Json(new { Success = false, Message = "Post does not exist." }, JsonRequestBehavior.AllowGet);
                 }
 
                 var user = context.Users.Find(User.Identity.GetUserId());

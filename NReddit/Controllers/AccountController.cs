@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using NReddit.Data;
+﻿using NReddit.Data;
 using NReddit.Models;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace NReddit.Controllers
 {
@@ -14,7 +14,8 @@ namespace NReddit.Controllers
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -35,13 +36,13 @@ namespace NReddit.Controllers
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var result = authenticator.Register(model.Username, model.Password);
-
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -55,7 +56,8 @@ namespace NReddit.Controllers
             return View(model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SignOut()
         {
             authenticator.SignOut();
