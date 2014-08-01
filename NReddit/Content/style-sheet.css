@@ -100,8 +100,16 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   background: #4ba345; }
 form .field-validation-error {
+  margin-left: 10px;
   color: red; }
 form + a {
   color: #0094da; }
+
+.validation-summary-errors {
+  color: red; }
+  .validation-summary-errors ul {
+    padding-left: 0; }
+    .validation-summary-errors ul li {
+      list-style: none; }
 
 /*# sourceMappingURL=style-sheet.css.map */

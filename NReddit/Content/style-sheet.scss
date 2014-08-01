@@ -179,11 +179,28 @@ form
 
     .field-validation-error
     {
+        margin-left: 10px;
         color: red;
     }
 
     + a 
     {
         color: rgb(0, 148, 218);
+    }
+}
+
+
+.validation-summary-errors
+{
+    color: red;
+
+    ul
+    {
+        padding-left: 0;
+
+        li
+        {
+            list-style:none;
+        }
     }
 }
