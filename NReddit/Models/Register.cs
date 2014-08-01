@@ -7,7 +7,7 @@ namespace NReddit.Models
     {
         [Required(ErrorMessage = "You can't leave this empty.")]
         [Display(Name = "Username")]
-        [Remote("IsUsernameAvailable", "Home", ErrorMessage = "Someone already has that username.")]
+        [Remote("IsUsernameAvailable", "Account", ErrorMessage = "Someone already has that username.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "You can't leave this empty.")]

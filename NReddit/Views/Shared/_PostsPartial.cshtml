@@ -1,0 +1,28 @@
+﻿@model IEnumerable<NReddit.Models.PostViewModel>
+
+@{
+    ViewBag.Title = "Something";
+}
+
+@foreach (var post in Model)
+{
+    <div class="post">
+        <div class="upvote">
+
+            @if (post.Voted)
+            {
+                <a class="upvote-link voted" data-id="@post.Id"></a>
+            }
+            else
+            {
+                <a class="upvote-link" data-id="@post.Id"></a>
+            }
+
+            <span class="vote-count">@post.Score</span>
+        </div>
+        <div class="link">
+            <a class="post-link" href="@post.Link">@post.Title</a>
+            <span class="post-tagline">@post.Tagline</span>
+        </div>
+    </div>
+}

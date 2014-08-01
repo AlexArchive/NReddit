@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using NReddit.Data;
 using NReddit.Models;
 
 namespace NReddit.Controllers
@@ -58,6 +60,15 @@ namespace NReddit.Controllers
         {
             authenticator.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult IsUsernameAvailable(string username)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var usernameAvailable = !context.Users.Any(user => user.UserName == username);
+                return Json(usernameAvailable, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

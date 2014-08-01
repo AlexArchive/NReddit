@@ -1,8 +1,8 @@
-﻿using System.Net.Mime;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using NReddit.Data;
 using NReddit.Data.Model;
 using NReddit.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,16 +10,33 @@ namespace NReddit.Controllers
 {
     public class HomeController : Controller
     {
+        private const int PageSize = 16;
+
         public ActionResult Index()
         {
+            return View(LoadPosts());
+        }
+
+        public ActionResult InfiniteScroll(int pageNumber)
+        {
+            if (Request.IsAjaxRequest())
+                return PartialView("_PostsPartial", LoadPosts(pageNumber));
+
+            return HttpNotFound();
+        }
+
+        private IEnumerable<PostViewModel> LoadPosts(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+
             using (var context = new ApplicationDbContext())
             {
-                var userId = User.Identity.GetUserId();
-
                 var query =
                     context.Posts
                            .OrderByDescending(post => post.Score)
                            .ThenBy(post => post.Id)
+                           .Skip(PageSize * id)
+                           .Take(PageSize)
                            .Select(post => new PostViewModel
                            {
                                Id = post.Id,
@@ -30,9 +47,9 @@ namespace NReddit.Controllers
                                Voted = post.UsersWhoVoted.Any(user => user.Id == userId)
                            });
 
-                return View(query.ToList());
+                return query.ToList();
             }
-        }
+        }  
 
         [Authorize]
         public ActionResult Vote(int id)
@@ -63,15 +80,6 @@ namespace NReddit.Controllers
                 context.SaveChanges();
 
                 return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult IsUsernameAvailable(string username)
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var usernameAvailable = !context.Users.Any(user => user.UserName == username);
-                return Json(usernameAvailable, JsonRequestBehavior.AllowGet);
             }
         }
 

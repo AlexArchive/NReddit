@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\style-sheet.css">
       <DependentUpon>style-sheet.scss</DependentUpon>
     </Content>
@@ -154,6 +155,7 @@
     </Content>
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Post.cshtml" />
+    <Content Include="Views\Shared\_PostsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

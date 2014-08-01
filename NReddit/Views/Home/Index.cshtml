@@ -4,36 +4,23 @@
     ViewBag.Title = "Index";
 }
 
-@foreach (var post in Model)
-{
-    <div class="post">
-        <div class="upvote">
-            
-            @if (post.Voted)
-            {
-                <a class="upvote-link voted" data-id="@post.Id"></a>
-            }
-            else
-            {
-                <a class="upvote-link" data-id="@post.Id"></a>
-            }
+<div class="posts">
+    @Html.Partial("_PostsPartial", Model)
+</div>
 
-            <span class="vote-count">@post.Score</span>
-        </div>
-        <div class="link">
-            <a class="post-link" href="@post.Link">@post.Title</a>
-            <span class="post-tagline">@post.Tagline</span>
-        </div>
-    </div>
-}
+<img alt="" id="loadingAnimation" src="~/Content/ajax-loader.gif" style="display:none;"/>
 
 @section Scripts
 {
     <script>
-        var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
 
-        $(".upvote-link").click(function () {
+        $(document).ready(function() {
+            $(".upvote-link").click(vote);
+            $(window).scroll(appendPosts);
+        });
 
+        function vote() {
+            var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
             if (!authenticated) {
                 alert("You must be authenticated before you can vote. Please login.");
                 return;
@@ -51,17 +38,45 @@
                 voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
             }
 
-            var requestUrl = "Home/Vote/" + postId;
-
-            $.get(requestUrl, function (response) {
+            $.get("Home/Vote/" + postId, function(response) {
                 if (!response.Success) {
                     alert(response.Message);
                     return;
                 }
             })
-            .fail(function (error) {
-             
+            .fail(function(error) {
+            
             });
-        });
+        }
+
+        var count = 1;
+        var loading = false;
+        var loadedAll = false;
+
+        function appendPosts() {
+
+            var bottom = $(window).scrollTop() == $(document).height() - $(window).height();
+            if (!bottom || loading || loadedAll)  return;
+            
+            loading = true;
+            $("#loadingAnimation").show();
+
+            $.get("Home/InfiniteScroll/" + count, function(response) {
+                $("#loadingAnimation").hide();
+                loading = false;
+
+                if (response.trim() == "") {
+                    loadedAll = true;
+                    return;
+                }
+
+                count++;
+                $(".posts").append(response);
+            })
+            .fail(function(error) {
+                console.log(error);
+            });
+        }
+
     </script>
 }
