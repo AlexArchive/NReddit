@@ -35,15 +35,19 @@ header {
     margin: 0; }
   header nav {
     float: right; }
-    header nav li {
-      display: block;
-      margin-left: 5px; }
-      header nav li a {
-        background: #428BCA;
-        color: white;
-        padding: 5px 15px; }
-      header nav li a:hover {
-        background: #3580bd; }
+    header nav ul {
+      list-style: none; }
+      header nav ul form {
+        display: inline; }
+      header nav ul li {
+        margin-left: 5px;
+        display: inline; }
+        header nav ul li a {
+          background: #428BCA;
+          color: white;
+          padding: 5px 15px; }
+        header nav ul li a:hover {
+          background: #3580bd; }
 
 .post {
   overflow: hidden;

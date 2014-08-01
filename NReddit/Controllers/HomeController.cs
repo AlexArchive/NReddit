@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Net.Mime;
+using Microsoft.AspNet.Identity;
 using NReddit.Data;
+using NReddit.Data.Model;
 using NReddit.Models;
 using System.Linq;
 using System.Web.Mvc;
@@ -17,6 +19,7 @@ namespace NReddit.Controllers
                 var query =
                     context.Posts
                            .OrderByDescending(post => post.Score)
+                           .ThenBy(post => post.Id)
                            .Select(post => new PostViewModel
                            {
                                Id = post.Id,
@@ -70,6 +73,33 @@ namespace NReddit.Controllers
                 var usernameAvailable = !context.Users.Any(user => user.UserName == username);
                 return Json(usernameAvailable, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [Authorize]
+        public ActionResult Post()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Post(PostInputModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            
+            using (var context = new ApplicationDbContext())
+            {
+                var post = new Post();
+                post.Title = model.Title;
+                post.Tagline = model.Tagline;
+                post.Link = model.Link;
+
+                context.Posts.Add(post);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

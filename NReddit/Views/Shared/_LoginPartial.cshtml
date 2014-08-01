@@ -1,16 +1,16 @@
-﻿@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "signOutForm" }))
+﻿<ul>
+
+    @if (Request.IsAuthenticated)
     {
-        @Html.AntiForgeryToken()
-        <ul>
+        <li>@Html.ActionLink("Submit Post", "Post", "Home")</li>
+        using (Html.BeginForm("SignOut", "Account", FormMethod.Post, new { id = "signOutForm" }))
+        {
+            @Html.AntiForgeryToken()
             <li><a href="javascript:document.getElementById('signOutForm').submit()">Sign Out</a></li>
-        </ul>
+        }
     }
-}
-else
-{
-    <ul>
+    else
+    {
         <li>@Html.ActionLink("Click here to login or register", "Login", "Account")</li>
-    </ul>
-}            
+    }
+</ul>

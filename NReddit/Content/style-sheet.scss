@@ -59,21 +59,31 @@ header
     {
         float: right;
         
-        li
+        ul
         {
-            display: block;
-            margin-left: 5px;
+            list-style: none;
 
-            a 
+            form
             {
-                background: $accentColor;
-                color: white;
-                padding: 5px 15px;
+                display: inline;
             }
 
-            a:hover
+            li
             {
-                background: darken($accentColor, 5%);
+                margin-left: 5px;
+                display: inline;
+
+                a 
+                {
+                    background: $accentColor;
+                    color: white;
+                    padding: 5px 15px;
+                }
+
+                a:hover
+                {
+                    background: darken($accentColor, 5%);
+                }
             }
         }
     }

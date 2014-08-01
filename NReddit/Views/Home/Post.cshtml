@@ -1,0 +1,14 @@
+﻿@model NReddit.Models.PostInputModel
+
+@{
+    ViewBag.Title = "Post";
+}
+
+<h2>Post</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+    <input type="submit" value="Submit Post"/>
+}
