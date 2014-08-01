@@ -62,5 +62,14 @@ namespace NReddit.Controllers
                 return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult IsUsernameAvailable(string username)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var usernameAvailable = !context.Users.Any(user => user.UserName == username);
+                return Json(usernameAvailable, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

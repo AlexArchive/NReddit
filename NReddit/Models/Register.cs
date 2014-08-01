@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace NReddit.Models
 {
@@ -6,6 +7,7 @@ namespace NReddit.Models
     {
         [Required(ErrorMessage = "You can't leave this empty.")]
         [Display(Name = "Username")]
+        [Remote("IsUsernameAvailable", "Home", ErrorMessage = "Someone already has that username.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "You can't leave this empty.")]
@@ -16,7 +18,7 @@ namespace NReddit.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "These passwords don't match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "These passwords don't match.")]
         public string ConfirmPassword { get; set; }
     }
 }
