@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace NReddit.Data.Model
+namespace NReddit.Database.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
         public virtual ICollection<Post> PostsVotedOn { get; set; }
     }

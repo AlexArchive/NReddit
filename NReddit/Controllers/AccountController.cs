@@ -1,4 +1,5 @@
-﻿using NReddit.Data;
+﻿using NReddit.Authentication;
+using NReddit.Database;
 using NReddit.Models;
 using System.Linq;
 using System.Web.Mvc;

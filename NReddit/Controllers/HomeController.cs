@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using NReddit.Data;
-using NReddit.Data.Model;
+using NReddit.Database;
+using NReddit.Database.Models;
 using NReddit.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace NReddit.Controllers
         {
             if (Request.IsAjaxRequest())
                 return PartialView("_PostsPartial", LoadPosts(pageNumber));
-
+            
             return HttpNotFound();
         }
 
@@ -33,7 +33,7 @@ namespace NReddit.Controllers
 
                 var query =
                     context.Posts
-                           .OrderByDescending(post => post.Score)
+                           .OrderByDescending(post => post.Votes)
                            .ThenBy(post => post.Id)
                            .Skip(PageSize * pageNumber)
                            .Take(PageSize)
@@ -42,7 +42,7 @@ namespace NReddit.Controllers
                                Id = post.Id,
                                Link = post.Link,
                                Title = post.Title,
-                               Score = post.Score,
+                               Score = post.Votes,
                                Tagline = post.Tagline,
                                Voted = post.UsersWhoVoted.Any(user => user.Id == userId)
                            });
@@ -72,14 +72,14 @@ namespace NReddit.Controllers
 
                 if (alreadyVoted)
                 {
-                    post.Score -= 1;
+                    post.Votes -= 1;
                     post.UsersWhoVoted.Remove(user);
                     context.SaveChanges();
 
                     return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
 
-                post.Score += 1;
+                post.Votes += 1;
                 post.UsersWhoVoted.Add(user);
                 context.SaveChanges();
 
