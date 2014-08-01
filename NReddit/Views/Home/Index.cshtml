@@ -15,30 +15,30 @@
     <script>
 
         $(document).ready(function() {
-            $(".upvote-link").click(vote);
+            $(document).on('click', '.upvote-link', vote);
             $(window).scroll(appendPosts);
         });
 
         function vote() {
             var authenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
             if (!authenticated) {
-                alert("You must be authenticated before you can vote. Please login.");
+                alert('You must be authenticated before you can vote. Please login.');
                 return;
             }
 
             var voteButton = $(this);
-            var postId = voteButton.attr("data-id");
-            var voteCountLabel = voteButton.next(".vote-count");
-            var voted = voteButton.hasClass("voted");
+            var postId = voteButton.attr('data-id');
+            var voteCountLabel = voteButton.next('.vote-count');
+            var voted = voteButton.hasClass('voted');
             if (voted) {
-                voteButton.removeClass("voted");
+                voteButton.removeClass('voted');
                 voteCountLabel.text(parseInt(voteCountLabel.text(), 10) - 1);
             } else {
-                voteButton.addClass("voted");
+                voteButton.addClass('voted');
                 voteCountLabel.text(parseInt(voteCountLabel.text(), 10) + 1);
             }
 
-            $.get("Home/Vote/" + postId, function(response) {
+            $.get('Home/Vote/' + postId, function(response) {
                 if (!response.Success) {
                     alert(response.Message);
                     return;
@@ -59,10 +59,10 @@
             if (!bottom || loading || loadedAll)  return;
             
             loading = true;
-            $("#loadingAnimation").show();
+            $('#loadingAnimation').show();
 
-            $.get("Home/InfiniteScroll/" + count, function(response) {
-                $("#loadingAnimation").hide();
+            $.get('"Home/InfiniteScroll/' + count, function(response) {
+                $('#loadingAnimation').hide();
                 loading = false;
 
                 if (response.trim() == "") {
@@ -71,7 +71,7 @@
                 }
 
                 count++;
-                $(".posts").append(response);
+                $('.posts').append(response);
             })
             .fail(function(error) {
                 console.log(error);
