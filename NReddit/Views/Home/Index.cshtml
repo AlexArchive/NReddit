@@ -39,14 +39,14 @@
             }
 
             $.get('Home/Vote/' + postId, function(response) {
-                if (!response.Success) {
-                    alert(response.Message);
-                    return;
-                }
-            })
-            .fail(function(error) {
+                    if (!response.Success) {
+                        alert(response.Message);
+                        return;
+                    }
+                })
+                .fail(function(error) {
             
-            });
+                });
         }
 
         var count = 1;
@@ -62,21 +62,42 @@
             $('#loadingAnimation').show();
 
             $.get('Home/InfiniteScroll/' + count, function(response) {
-                $('#loadingAnimation').hide();
-                loading = false;
+                    $('#loadingAnimation').hide();
+                    loading = false;
 
-                if (response.trim() == "") {
-                    loadedAll = true;
-                    return;
-                }
+                    count++;
 
-                count++;
-                $('.posts').append(response);
-            })
-            .fail(function(error) {
-                console.log(error);
-            });
+                    $('#postTemplate')
+                        .tmpl(response.Posts)
+                        .appendTo('.posts');
+
+                    if (response.Finished) {
+                        loadedAll = true;
+                    }
+
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
         }
 
+    </script>
+
+    <script id="postTemplate" type="text/x-jquery-tmpl">
+        <div class="post">
+            <div class="upvote">
+
+                {{if Voted}}
+                <a class="upvote-link voted" data-id="${Id}"></a>
+                {{else}}
+                <a class="upvote-link" data-id="${Id}"></a>
+                {{/if}}
+                <span class="vote-count">${Score}</span>
+            </div>
+            <div class="link">
+                <a class="post-link" href="${Link}">${Title}</a>
+                <span class="post-tagline">${Tagline}</span>
+            </div>
+        </div>
     </script>
 }

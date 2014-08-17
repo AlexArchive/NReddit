@@ -12,6 +12,8 @@ namespace NReddit.Controllers
 {
     public class HomeController : Controller
     {
+        private const int PageSize = 16;
+
         public ActionResult Index()
         {
             return View(LoadPosts());
@@ -22,7 +24,16 @@ namespace NReddit.Controllers
             if (Request.IsAjaxRequest())
             {
                 Thread.Sleep(TimeSpan.FromSeconds(1));
-                return PartialView("_PostsPartial", LoadPosts(pageNumber));
+
+                var posts = LoadPosts(pageNumber);
+                
+                var data = new
+                {
+                    Posts = posts,
+                    Finished = posts.Count() < PageSize
+                };
+
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
 
             return HttpNotFound();
@@ -30,7 +41,6 @@ namespace NReddit.Controllers
 
         private IEnumerable<PostViewModel> LoadPosts(int pageNumber = 0)
         {
-            const int PageSize = 16;
 
             using (var context = new ApplicationDbContext())
             {
