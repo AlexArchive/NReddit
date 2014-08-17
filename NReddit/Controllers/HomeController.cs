@@ -49,7 +49,7 @@ namespace NReddit.Controllers
                 var query =
                     context.Posts
                            .OrderByDescending(post => post.Votes)
-                           .ThenBy(post => post.Id)
+                           .ThenByDescending(post => post.Id)
                            .Skip(PageSize * pageNumber)
                            .Take(PageSize)
                            .Select(post => new PostViewModel
