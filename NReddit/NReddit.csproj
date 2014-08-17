@@ -89,6 +89,7 @@
       <DependentUpon>style-sheet.scss</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\application.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
