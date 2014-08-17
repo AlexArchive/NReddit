@@ -1,6 +1,6 @@
 ﻿$(document).ready(function() {
     $(document).on('click', '.upvote-link', vote);
-    $(window).scroll(appendPosts);
+    $(window).bind('mousewheel DOMMouseScroll', appendPosts);
 });
 
 
